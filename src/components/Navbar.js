@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 export default function Navbar(props) {
-  return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+
+  
+      return (
+        <nav className={`navbar navbar-expand-lg border-bottom navbar-${props.mode} bg-${props.mode}`} >
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           {props.title}
@@ -22,17 +24,21 @@ export default function Navbar(props) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">
+              <a className="nav-link active"  aria-current="page" href="/">
                 {props.homeText}
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/">
+              <a className="nav-link"  href="/">
                 {props.aboutText}
               </a>
             </li>
           </ul>
-          <form className="d-flex" role="search">
+          <div className={`form-check form-switch p-2 text-${props.mode==='light'?'dark':'light'}`}>
+                      <input className="form-check-input  ms-3" color="black" onClick={props.toggleMode} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                      <label className="form-check-label ps-2 fw-bold fs-6" htmlFor="flexSwitchCheckDefault">{props.btnText}</label>
+      </div>
+          {/*<form className="d-flex" role="search">
             <input
               className="form-control me-2"
               type="search"
@@ -42,7 +48,7 @@ export default function Navbar(props) {
             <button className="btn btn-outline-success" type="submit">
               Search
             </button>
-          </form>
+      </form>*/}
         </div>
       </div>
     </nav>
