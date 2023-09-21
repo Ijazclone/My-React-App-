@@ -6,6 +6,12 @@ import Alert from './components/alert';
 import TextForm from './components/textForm';
 import About from './components/About';
 import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   const [mode, setMode] = useState('light');
@@ -17,6 +23,9 @@ function App() {
           msg: message,
           type: type
     })
+    setTimeout(() => {
+      setAlert(null);
+    }, 1500);
   }
       
   const toggleMode = ()=>{
@@ -24,26 +33,31 @@ function App() {
       setMode('dark');
       document.body.style.backgroundColor = '#042743';
       setBtnText('Light Mode');
-      setAlert("Dark mode has been enabled", "success");
+      showAlert("Dark mode has been enabled", "success");
       }
       else{
         setMode('light');
         document.body.style.backgroundColor = 'white';
         setBtnText('Dark Mode');
-        setAlert("Light mode has been enabled", "success");
+        showAlert("Light mode has been enabled", "success");
         }
       }
 
   return (
     <>
+  <Router>
+    <Navbar title="My App" homeText="Home" mode={mode} btnText={btnText} toggleMode={toggleMode} aboutText="About Us"/>
+    <Alert alert={alert}/>
+    <div className="container my-2">
     
-  <Navbar title="My App" homeText="Home" mode={mode} btnText={btnText} toggleMode={toggleMode} aboutText="About Us"/>
-  <Alert alert={alert}/>
-  <div className="container my-2">
-  <TextForm heading="Enter the text khan" mode={mode} />
-  <About/> 
-  </div>
- 
+      <Routes>
+              <Route path="/About" element={<About />}/>        
+              
+              <Route path="/" element={<TextForm showAlert={showAlert} heading="Enter the text khan" mode={mode} />}/>
+      </Routes>
+    
+    </div>
+  </Router>
 
     </>
   );
